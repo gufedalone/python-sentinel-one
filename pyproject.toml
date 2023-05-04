@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "python-sentinel-one"
+version = "0.1.0"
+description = ""
+authors = ["vlad <khalvlalove@gmail.com>"]
+readme = "README.md"
+packages = [{include = "python_sentinel_one"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+selene = "2.0.0rc2"
+pytest = "7.3.1"
+allure-pytest = "^2.13.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
