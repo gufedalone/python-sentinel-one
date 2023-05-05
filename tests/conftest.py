@@ -1,6 +1,5 @@
 import pytest
 from selene import browser
-from utils import attach
 
 
 @pytest.fixture(scope='function', autouse=True)
@@ -9,7 +8,4 @@ def driver_management():
     browser.config.hold_browser_open = True
     browser.config.timeout = 10
     yield browser
-    attach.add_page_source(browser)
-    attach.add_screenshot(browser)
-    attach.add_logs(browser)
     browser.quit()
