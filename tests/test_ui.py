@@ -1,7 +1,5 @@
 import allure
-from selene import browser
-from selene.support.conditions import have
-from controls.dropdown import Dropdown
+from python_sentinel_one import app
 
 
 @allure.parent_suite('UI')
@@ -9,29 +7,20 @@ from controls.dropdown import Dropdown
 @allure.title('Test request demo form')
 @allure.link('https://www.sentinelone.com/request-demo/', name='Form page')
 def test_get_demo_form():
-    # GIVEN
-    url = 'https://www.sentinelone.com/'
-
-    with allure.step('Open main page'):
-        browser.open(url)
-
-    with allure.step('Cancel notifications'):
-        browser.element('#onesignal-slidedown-cancel-button').click()
-
-    # WHEN
-    with allure.step('Open "request demo" form page'):
-        browser.element('a.demo:nth-child(3)').click()
+    with allure.step('Open form page'):
+        app.open_form_page('https://www.sentinelone.com/request-demo/')
 
     with allure.step('Fill form'):
-        browser.element('#FirstName').type('Marta')
-        browser.element('#LastName').type('Smith')
-        browser.element('.demo-form #Email').type('mycjojs@snova.io')
-        browser.element('#Company').type('Snovja Mi')
-        browser.element('#Phone').type('586-535-1202')
-        Dropdown(browser.element('#Employees__c')).select(option='50-500')
-        Dropdown(browser.element('#Country')).select(option='Costa Rica')
-        browser.element('.demo-form button').click()
+        app.form.fill_first_name('Mrta')
+        app.form.fill_last_name('Smth')
+        app.form.fill_email('ycjojs@snova.io')
+        app.form.fill_company('Sovja Mi')
+        app.form.fill_mobile_phone('586-565-1292')
+        app.form.choose_employees_number('50-500')
+        app.form.choose_country('Costa Rica')
+        app.form.submit()
 
-    # THEN
-    with allure.step('Check verification message is shown'):
-        browser.should(have.url_containing('/request-demo-thank-you'))
+    with allure.step('Check endpoint is reached'):
+        app.endpoint.should_be('/request-demo-thank-you')
+
+    app.add_attachments()
